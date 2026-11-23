@@ -1,0 +1,180 @@
+set path+=**
+
+" Ignore files
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
+
+" Plugins
+call plug#begin('~/.config/nvim/autoload/plug')
+  " LSP Plugins
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
+  Plug 'WhoIsSethDaniel/mason-tool-installer.nvim'
+  Plug 'mfussenegger/nvim-jdtls'
+
+  " Autocompletion
+  Plug 'hrsh7th/cmp-nvim-lua'
+  Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
+
+  "  Snippets
+  Plug 'L3MON4D3/LuaSnip'
+  Plug 'saadparwaiz1/cmp_luasnip'
+  Plug 'rafamadriz/friendly-snippets'
+
+  " Misc plugins
+  Plug 'jeffkreeftmeijer/vim-numbertoggle'
+  Plug 'ryanoasis/vim-devicons'
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'sbdchd/neoformat'
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'alpertuna/vim-header'
+  Plug 'whonore/Coqtail'
+  "markdown preview
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+  "Plug 'glepnir/dashboard-nvim'
+
+  " Themes
+  Plug 'gruvbox-community/gruvbox'
+  Plug 'folke/tokyonight.nvim'
+
+  "cursor smear animation
+  Plug 'sphamba/smear-cursor.nvim'
+
+  " Treesitter - syntax highlight
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  Plug 'nvim-tree/nvim-tree.lua'
+  Plug 'nvim-tree/nvim-web-devicons'
+
+  " Harpoon - file navigation
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'theprimeagen/harpoon'
+
+  " Git worktree
+  Plug 'theprimeagen/git-worktree.nvim'
+
+  " Fugitive Vim - git
+  Plug 'tpope/vim-fugitive'
+  Plug 'junegunn/gv.vim'
+
+  " Telescope
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzy-native.nvim', {
+      \ 'do': 'make -C deps/fzy-lua-native'
+      \ }
+
+  " LaTeX
+  Plug 'latex-lsp/texlab'
+  Plug 'lervag/vimtex'
+
+  " Terminal
+  Plug 'akinsho/toggleterm.nvim'
+
+  " Keybinds
+  Plug 'folke/which-key.nvim'
+
+  " DAP - Debug Adapter Protocol
+  Plug 'mfussenegger/nvim-dap'
+  Plug 'rcarriga/nvim-dap-ui'
+  Plug 'nvim-neotest/nvim-nio'
+  Plug 'jay-babu/mason-nvim-dap.nvim'
+
+  "Auto ()
+  Plug 'windwp/nvim-autopairs'
+
+  "shows color codes as colors
+  Plug 'norcalli/nvim-colorizer.lua'
+
+call plug#end()
+
+" Load my plugins configs
+lua require('my-plugins-config')
+"lua require('doom-one').setup({ transparent_background = true })
+
+let g:neoformat_try_node_exe = 1
+
+set nocompatible                " disable compatibility to old-time vi
+set showmatch                   " show matching
+set ignorecase                  " case insensitive
+set nohlsearch                  " no highlight search
+set hidden                      " save buffer on background
+set noerrorbells                " no errorbells
+set nowrap                      " no wrap line
+set incsearch                   " incremental search
+set tabstop=2                   " number of columns occupied by a tab
+set softtabstop=2               " see multiple spaces as tabstops so <BS> does the right thing
+set expandtab                   " converts tabs to white space
+set shiftwidth=2                " width for autoindents
+set autoindent                  " indent a new line the same amount as the line just typed
+set number                      " add line numbers
+set wildmode=longest,list,full  " get bash-like tab completions
+set signcolumn=yes              " add column at the begining
+set scrolloff=8                 " when scrolling set 8 lines away
+filetype plugin on              " allow auto-indenting depending on file type
+syntax on                       " syntax highlighting
+set mouse=a                     " enable mouse click
+set clipboard=unnamedplus       " using system clipboard
+set foldmethod=indent
+
+let mapleader = ' '
+
+" Remaps
+vnoremap K :m '<-2<CR>gv=gv
+vnoremap J :m '>+1<CR>gv=gv
+nnoremap Y yg$
+nnoremap J mzJ`z
+inoremap <C-c> <esc>
+tnoremap <esc> <C-\><C-n>
+nmap <leader>wv <C-w>v
+nmap <leader>wc <C-w>q
+nmap <leader>ws <C-w>s
+nmap <leader>wl <C-w>l
+nmap <leader>wh <C-w>h
+nmap <leader>wk <C-w>k
+nmap <leader>wj <C-w>j
+nmap <leader>wt <cmd>tab split<CR>
+nmap <leader>wn <cmd>tabnext<CR>
+nmap <leader>wb <cmd>tabprevious<CR>
+
+" nvim-tree keybindings
+nmap <leader>e <cmd>NvimTreeToggle<CR>
+
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Markdown Preview Binding
+nmap <leader>md <Plug>MarkdownPreviewToggle
+
+fun! EmptyRegisters()
+    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
+    for r in regs
+        call setreg(r, [])
+    endfor
+endfun
+
+augroup Default
+  autocmd!
+  autocmd BufWritePre * %s/\s\+$//e
+augroup END
+
+lua require('smear_cursor').enabled = true
+
+" Colorscheme
+
+set termguicolors
+colorscheme tokyonight-storm
+"highlight Normal guibg=none
+
+
+

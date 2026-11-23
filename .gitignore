@@ -1,0 +1,21 @@
+.DS_Store
+
+# Temporary Vim/Neovim files
+*.swp
+*.swo
+*~
+*.bak
+
+# Session and history files
+.Session.vim
+.netrwhist
+
+# Logs
+*.log*.swp
+*~
+*.log
+spell/*.spl
+plugin/packer_compiled.lua
+.env
+lua/local.lua
+autoload/plug/
